@@ -21,6 +21,7 @@ export default {
   },
   methods: {
     loadCSV (filepath) {
+      /* The data is fetched from a CSV file that is processed separately. */
       let output = []
       d3.csv(filepath).then(function (data) {
         data.forEach(function (row) {
@@ -45,6 +46,8 @@ export default {
         })
         let quantile = require('compute-quantile')
         q[c] = { 'q1': quantile(arr, 0.25), 'q3': quantile(arr, 0.75) }
+        console.log(c)
+        console.log(q)
       }
       return q
     }

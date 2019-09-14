@@ -19,11 +19,12 @@ export default {
     return {
       fields: [
         { key: 'name', label: 'Brand', sortable: true },
-        { key: 'home_to_sale', label: 'Click Sale', sortable: true, formatter: this.ratioFormatter, tdClass: this.cellStyle },
-        { key: 'sale_to_item', label: 'Click Item', sortable: true, formatter: this.ratioFormatter, tdClass: this.cellStyle },
-        { key: 'item_to_cart', label: 'Add To Cart', sortable: true, formatter: this.ratioFormatter, tdClass: this.cellStyle },
-        { key: 'abandoned_cart', label: 'Abandoned Cart', sortable: true, formatter: this.ratioFormatter, tdClass: this.cellStyle },
+        { key: 'home_to_sale', label: 'Click Sale', sortable: true, formatter: this.ratioFormatter, tdClass: this.cellStyle, sortByFormatted: true },
+        { key: 'sale_to_item', label: 'Click Item', sortable: true, formatter: this.ratioFormatter, tdClass: this.cellStyle, sortByFormatted: true },
+        { key: 'item_to_cart', label: 'Add To Cart', sortable: true, formatter: this.ratioFormatter, tdClass: this.cellStyle, sortByFormatted: true },
+        { key: 'abandoned_cart', label: 'Abandoned Cart', sortable: true, formatter: this.ratioFormatter, tdClass: this.cellStyle, sortByFormatted: true },
         { key: 'avg_order', label: 'Average Order', sortable: true, formatter: this.amountFormatter, tdClass: this.cellStyle },
+        { key: 'category', label: 'Category', sortable: true },
         { key: 'number_orders', label: 'Number of orders', sortable: true, tdClass: this.cellStyle },
         { key: 'start_date', label: 'Start date', sortable: true },
         { key: 'ca', label: 'CA', sortable: true, formatter: this.amountFormatter, tdClass: this.cellStyle },
@@ -40,6 +41,7 @@ export default {
       return parseFloat(value * 100).toFixed(1) + '%'
     },
     cellStyle (value, key, items) {
+      /* Each cell value is assigned a   based on the quartile it belongs to. */
       const x = parseFloat(value)
       if (key in this.quartiles) {
         if (x > this.quartiles[key]['q3']) {
@@ -52,6 +54,8 @@ export default {
       }
     },
     showModal (row) {
+      /* This modal displays the products of the sale that has been clicked. To retrieve
+      the corresponding products, we need to store the sale ID. */
       this.currentSale.id = row.sale_id
       this.currentSale.brand = row.name
       this.currentSale.cover = row.cover
