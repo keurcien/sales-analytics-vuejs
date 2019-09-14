@@ -1,9 +1,9 @@
 <template>
   <div>
-    <b-table hover :items="table" :fields="fields" @row-clicked="testfun"></b-table>
-    <b-modal ref="sale-details-modal">
-      <img :src="currentSaleCover" class="sale-cover"/>
-      <span>{{ this.currentSaleBrand }}</span>
+    <b-table hover :items="table" :fields="fields" @row-clicked="showModal"></b-table>
+    <b-modal ref="sale-details-modal" hide-header hide-footer>
+      <img :src="currentSale.cover" class="sale-cover"/>
+      <span>{{ this.currentSale.brand }}</span>
     </b-modal>
   </div>
 </template>
@@ -29,9 +29,7 @@ export default {
         { key: 'ca', label: 'CA', sortable: true, formatter: this.amountFormatter, tdClass: this.cellStyle },
         { key: 'sale_id', label: 'Sale ID' }
       ],
-      currentSaleId: '',
-      currentSaleBrand: '',
-      currentSaleCover: ''
+      currentSale: { 'id': '', 'brand': '', 'cover': '' }
     }
   },
   methods: {
@@ -53,10 +51,10 @@ export default {
         }
       }
     },
-    testfun (row) {
-      this.currentSaleId = row.sale_id
-      this.currentSaleBrand = row.name
-      this.currentSaleCover = row.cover
+    showModal (row) {
+      this.currentSale.id = row.sale_id
+      this.currentSale.brand = row.name
+      this.currentSale.cover = row.cover
       this.$refs['sale-details-modal'].show()
     }
   }
