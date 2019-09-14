@@ -41,7 +41,7 @@ export default {
       return parseFloat(value * 100).toFixed(1) + '%'
     },
     cellStyle (value, key, items) {
-      /* Each cell value is assigned a   based on the quartile it belongs to. */
+      /* Each cell value is assigned a color based on the quartile it belongs to. */
       const x = parseFloat(value)
       if (key in this.quartiles) {
         if (x > this.quartiles[key]['q3']) {
